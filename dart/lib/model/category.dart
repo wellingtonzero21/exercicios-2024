@@ -10,7 +10,7 @@ class Category {
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['title'] != null ? new Title.fromJson(json['title']) : null;
+    title = json['title'] != null ? Title.fromJson(json['title']) : null;
     color = json['color'];
     backgroundColor = json['background-color'];
   }

@@ -20,7 +20,7 @@ class ChuvaModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['count'] = count;
     if (links != null) {
       data['links'] = links!.toJson();

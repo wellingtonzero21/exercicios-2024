@@ -17,4 +17,19 @@ class Controller {
 
     streamController.add(true);
   }
+
+  String formatEventTime(Data data, {bool somenteHora = false}) {
+    if (somenteHora) {
+      String startTime = data.start!.substring(11, 16);
+      String endTime = data.end!.substring(11, 16);
+
+      return '$startTime - $endTime';
+    }
+
+    String eventType = data.type!.title!.ptBr!;
+    String startTime = data.start!.substring(11, 16);
+    String endTime = data.end!.substring(11, 16);
+
+    return '$eventType de $startTime até $endTime';
+  }
 }

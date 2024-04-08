@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chuva_dart/controller/controller.dart';
+import 'package:chuva_dart/model/people.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -78,40 +79,42 @@ class _ActivityState extends State<Activity> {
                 textAlign: TextAlign.center,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.alarm,
                     size: 15,
                     color: Color.fromARGB(255, 48, 109, 195),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    'Domingo 07:00h - 08:00h',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    widget.controller.formatEventTime(
+                        widget.controller.dataDetail,
+                        somenteHora: true),
+                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_pin,
                     size: 15,
                     color: Color.fromARGB(255, 48, 109, 195),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    'Maputo',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    widget.controller.dataDetail.locations!.first.title!.ptBr!,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -175,68 +178,88 @@ class _ActivityState extends State<Activity> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 10,
               ),
               child: Text(
                 removeHtml(
                     widget.controller.dataDetail.description?.ptBr ?? ''),
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: const TextStyle(fontWeight: FontWeight.w500),
                 textAlign: TextAlign.start,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                left: 10,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    'Palestrante',
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              child: SizedBox(
-                child: TextButton(
-                  onPressed: () =>
-                      context.go('/person', extra: widget.controller),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 90,
-                        height: 60,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                'https:\/\/static.galoa.com.br\/file\/Eventmanager-Private\/styles\/large\/s3\/eventmanager_person\/Screenshot%202023-10-10%20at%2013.06.35.png?VersionId=4_z9e083e414507696175f50716_f10473fd681469d07_d20231010_m160744_c003_v0312007_t0020_u01696954064581\u0026itok=XSqu4FiW'),
-                          ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: Container(
+                constraints: const BoxConstraints(maxHeight: 300),
+                child: ListView.builder(
+                  itemCount: widget.controller.dataDetail.people?.length,
+                  itemBuilder: (context, index) {
+                    People people = widget.controller.dataDetail.people![index];
+
+                    return SizedBox(
+                      child: TextButton(
+                        onPressed: () =>
+                            context.go('/person', extra: widget.controller),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, bottom: 10),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    people.role!.label!.ptBr!,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 90,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage(people.picture ?? ""),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        (people.name ?? 'Sem nome').trim(),
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        people.institution ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 93, 93, 93)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sthepen William Hawking',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            'Universidade de Cambridge',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 93, 93, 93)),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ),

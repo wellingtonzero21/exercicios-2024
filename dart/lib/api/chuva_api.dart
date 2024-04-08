@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chuva_dart/model/chuvaModel.dart';
+import 'package:chuva_dart/model/chuva_model.dart';
 import 'package:dio/dio.dart';
 
 class ChuvaAPI {

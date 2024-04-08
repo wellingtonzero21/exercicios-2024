@@ -1,7 +1,7 @@
 import 'package:chuva_dart/api/chuva_api.dart';
 import 'package:chuva_dart/components/my_card.dart';
 import 'package:chuva_dart/controller/controller.dart';
-import 'package:chuva_dart/model/chuvaModel.dart';
+import 'package:chuva_dart/model/chuva_model.dart';
 import 'package:chuva_dart/model/data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -235,6 +235,7 @@ class _CalendarState extends State<Calendar> {
                       Data data = controller.listFiltred[index];
 
                       return MyCard(
+                        controller: controller,
                         data: data,
                         onTap: () {
                           controller.dataDetail = data;

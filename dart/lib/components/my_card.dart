@@ -1,24 +1,20 @@
+import 'package:chuva_dart/controller/controller.dart';
 import 'package:chuva_dart/model/data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/people.dart';
 
 class MyCard extends StatelessWidget {
   final Data data;
   final VoidCallback onTap;
+  final Controller controller;
 
   const MyCard({
     super.key,
     required this.data,
     required this.onTap,
+    required this.controller,
   });
-
-  String formatEventTime(Data data) {
-    String eventType = data.type!.title!.ptBr!;
-    String startTime = data.start!.substring(11, 16);
-    String endTime = data.end!.substring(11, 16);
-
-    return '$eventType de $startTime até $endTime';
-  }
 
   String getAuthorsNames(List<People> authors) {
     List<String> names = [];
@@ -77,22 +73,29 @@ class MyCard extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Visibility(
-                                visible: data.favoritar,
-                                child: const Icon(
-                                  Icons.bookmark,
-                                  color: Color.fromARGB(255, 107, 107, 107),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    controller.formatEventTime(data),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Text(
-                              formatEventTime(data),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Visibility(
+                                    visible: data.favoritar,
+                                    child: const Icon(
+                                      Icons.bookmark,
+                                      color: Color.fromARGB(255, 107, 107, 107),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             Text(
                               data.title?.ptBr ?? '',
