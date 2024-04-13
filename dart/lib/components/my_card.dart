@@ -1,6 +1,5 @@
 import 'package:chuva_dart/controller/controller.dart';
 import 'package:chuva_dart/model/data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/people.dart';
 
@@ -8,12 +7,18 @@ class MyCard extends StatelessWidget {
   final Data data;
   final VoidCallback onTap;
   final Controller controller;
+  final String title;
+  final String information;
+  final String? people;
 
   const MyCard({
     super.key,
     required this.data,
     required this.onTap,
     required this.controller,
+    required this.title,
+    required this.information,
+    this.people,
   });
 
   String getAuthorsNames(List<People> authors) {
@@ -98,7 +103,7 @@ class MyCard extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              data.title?.ptBr ?? '',
+                              title,
                               style: const TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,

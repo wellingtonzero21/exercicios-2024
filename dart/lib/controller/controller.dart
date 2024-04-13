@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:chuva_dart/model/data.dart';
 
 class Controller {
