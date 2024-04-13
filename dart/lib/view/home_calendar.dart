@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+  const Calendar({Key? key}) : super(key: key);
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -31,7 +31,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   List<Data> filterDataByDate(DateTime date) {
-    List<Data> datelist = listDate;
+    List<Data> datelist = listDate.toList();
 
     List<Data> filteredDate = datelist.where((data) {
       DateTime startDate = DateTime.parse(data.start!);
@@ -73,7 +73,7 @@ class _CalendarState extends State<Calendar> {
       chuvaModel?.data!.addAll(chuvaModelAux.data!);
     }
 
-    listDate = chuvaModel!.data!;
+    listDate = chuvaModel!.data!.toList();
 
     controller.listFiltred = filterDataByDate(_currentDate);
 
@@ -235,8 +235,11 @@ class _CalendarState extends State<Calendar> {
                       Data data = controller.listFiltred[index];
 
                       return MyCard(
-                        controller: controller,
                         data: data,
+                        controller: controller,
+                        title: data.title?.ptBr ?? '',
+                        information:
+                            "${data.type!.title!.ptBr} de ${controller.formatEventTime(data)} até ${controller.formatEventTime(data)}}",
                         onTap: () {
                           controller.dataDetail = data;
                           context.go('/activity', extra: controller);

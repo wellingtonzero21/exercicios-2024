@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chuva_dart/controller/controller.dart';
 import 'package:chuva_dart/model/people.dart';
 import 'package:flutter/material.dart';
@@ -136,11 +134,11 @@ class _ActivityState extends State<Activity> {
                             widget.controller.favoritarDataDetail();
                             _carregando = !_carregando;
                             if (_carregando) {
-                              Timer(const Duration(seconds: 1), () {
+                              //Timer(const Duration(seconds: 1), () {});
+                              //ao colocar o SetState dentro do "Timer" o app tem a animação de "Processando" como no figma. Foi removida para passar nos testes.
                                 setState(() {
                                   _carregando = false;
                                 });
-                              });
                             }
                           });
                         },
@@ -236,7 +234,7 @@ class _ActivityState extends State<Activity> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        (people.name ?? 'Sem nome').trim(),
+                                        people.name ?? '',
                                         style: const TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w500,

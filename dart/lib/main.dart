@@ -37,12 +37,12 @@ final GoRouter _router = GoRouter(
 class ChuvaDart extends StatelessWidget {
   const ChuvaDart({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
       title: 'Chuva ❤️ Flutter',
+      debugShowCheckedModeBanner: false,
     );
   }
 }
